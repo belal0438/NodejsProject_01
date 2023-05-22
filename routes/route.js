@@ -9,7 +9,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/data', ControllerData.postData);
+router.post('/taskDonData',ControllerData.PostTaskdoneData);
 router.delete('/delete/:id',ControllerData.DeleteData)
+router.delete('/deletedTaskDondata/:id',ControllerData.DeleteTaskDonData)
+router.get('/getdatataskdon',ControllerData.GetTaskDonData)
 router.get('/getdata',ControllerData.GetData)
 
 module.exports = router;

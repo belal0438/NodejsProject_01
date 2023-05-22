@@ -8,7 +8,6 @@ form.addEventListener('submit', onsubmit)
 
 const crudcrudlink = "http://localhost:4000";
 
-let LocatstoargeList = [];
 
 async function GetData() {
     try {
@@ -22,6 +21,23 @@ async function GetData() {
     }
 }
 GetData();
+
+
+async function GetTaskDonData() {
+    try {
+        let getdata = await axios.get(`${crudcrudlink}/getdatataskdon`)
+        getdata.data.forEach(element => {
+            //   console.log(element)  
+            DisplayForTaskDon(element)
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+GetTaskDonData();
+
+
+
 
 async function onsubmit(event) {
     try {
@@ -62,7 +78,7 @@ function Display(Obj) {
     Edditbtn.textContent = "Eddit";
     const taskDon = document.createElement('button');
     taskDon.id = "task";
-    taskDon.textContent = "Don";
+    taskDon.textContent = "Done";
 
     li.innerHTML = `Name: ${Obj.Name}, description: ${Obj.Descript}`;
 
@@ -76,6 +92,9 @@ function Display(Obj) {
             console.log(err);
         }
     }
+
+
+
 
     Edditbtn.onclick = async (eve) => {
         try {
@@ -92,6 +111,7 @@ function Display(Obj) {
 
 
 
+
     taskDon.onclick = async (eve) => {
         try {
             eve.preventDefault();
@@ -100,18 +120,13 @@ function Display(Obj) {
             //   console.log(TskDonData.data);
 
             let objforStore = {
-
                 Name: TskDonData.data.Name,
                 Descript: TskDonData.data.Descript
             }
-            // console.log(objforStore);
-            let converIntostr = JSON.stringify(objforStore);
-            LocatstoargeList.push(converIntostr)
-            localStorage.setItem("List", LocatstoargeList);
 
-            // GetDataFronStorage = JSON.parse(localStorage.getItem(`${TskDonData.data.id}`));
-            // console.log(GetDataFronStorage);
-            // DisplayForTaskDon(GetDataFronStorage)
+            let DondataPst = await axios.post(`${crudcrudlink}/taskDonData`, objforStore)
+            // console.log(DondataPst.data);
+            DisplayForTaskDon(DondataPst.data)
         } catch (err) {
             console.log(err);
         }
@@ -124,20 +139,35 @@ function Display(Obj) {
     li.appendChild(Edditbtn);
     li.appendChild(Deletbtn);
     usersList.appendChild(li);
-
 }
 
-    function DisplayForTaskDon(Obj2) {
-            // let data = JSON.parse(element)
-            const li = document.createElement('li');
-            const Deletbtn = document.createElement('button');
-            Deletbtn.id = 'x';
-            Deletbtn.textContent = "X";
-            li.innerHTML = `Name: ${Obj2.Name}, description: ${Obj2.Descript}`;
-            li.appendChild(Deletbtn);
-            taskdoneList.appendChild(li);
 
+
+
+
+
+function DisplayForTaskDon(Obj2) {
+    // let data = JSON.parse(element)
+    const li = document.createElement('li');
+    const Deletbtn = document.createElement('button');
+    Deletbtn.id = 'x';
+    Deletbtn.textContent = "X";
+    li.innerHTML = `Name: ${Obj2.Name}, description: ${Obj2.Descript}`;
+
+    Deletbtn.onclick = async (eve) => {
+        try {
+            // let UserId = Obj.id;
+            await axios.delete(`http://localhost:4000/deletedTaskDondata/${Obj2.id}`);
+            taskdoneList.removeChild(li)
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+
+    li.appendChild(Deletbtn);
+    taskdoneList.appendChild(li);
+}
 
 
 

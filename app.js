@@ -3,16 +3,21 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser');
 const app = express();
-const sequelize = require('./models/creatData');
-// const sequelize = require('./routes/route');
 
+const sequelize = require('./util/database');
+
+const UserData = require('./models/creatData');
+const TaskdonData = require('./models/taskdondata');
 
 const RoterProduct = require('./routes/route');
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.json())
 
+// TaskdonData.belongsTo(UserData);
+
 app.use(RoterProduct);
+
 
 sequelize
 // .sync({ force: true })
