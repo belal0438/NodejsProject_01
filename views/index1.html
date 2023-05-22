@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>todo_list</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Todo list</h1>
+  </header>
+
+  <section class="container">
+    <form id="my-form">
+      <h1>Add User</h1>
+      <div class="msg"></div>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+      </div>
+      <div>
+        <label for="Description">Description</label>
+        <textarea type="text" id="desc" cols="49" rows="3"></textarea>
+      </div>
+      <input class="btn" type="submit" value="Submit">
+    </form>
+
+    <ul id="users">Todo List</ul>
+
+  </section>
+
+  <section class="container2">
+    <ul id="taskdone">Todo Task completed</ul>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <script src="/js/index1.js"></script>
+</body>
+
+</html>
